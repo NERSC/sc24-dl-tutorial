@@ -276,7 +276,7 @@ The NVIDIA DALI library is a data loading library that can address both of these
 1. DALI can perform a wide array of data augmentation operations on the GPU, benefitting from acceleration relative to the CPU.
 2. DALI maintains its own worker threads in the C++ backend, enabling much more performant threading and concurrent operation.
 
-For this tutorial, we've provided an alternative data loader using DALI to accelerate the data augementations used in this training script that can be found in `utils/data_loader_dali.py`. This data loader is enabled via the command line
+For this tutorial, we've provided an alternative data loader using DALI to accelerate the data augmentations used in this training script that can be found in `utils/data_loader_dali.py`. This data loader is enabled via the command line
 argument `--data_loader_config=dali` to the training script.
 
 We can run this experiment on Perlmutter using DALI with 8 worker threads by running the following command:
