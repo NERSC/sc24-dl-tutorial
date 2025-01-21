@@ -423,7 +423,7 @@ architecture we are using relies mainly on GEMM operations that greatly benefit 
 While AMP provided a large increase in compute speed already, there are a few other optimizations available for PyTorch to improve
 compute throughput. A first (and simple change) is to enable the `fused` option in the Adam optimizer from `torch.optim.Adam`.
 In the past, this fused optimizer was mainly available in
-[APEX](https://github.com/NVIDIA/apex) but has now been made available in PyTorch directly. Enabling the `fused` option resultsin fewer kernels to perform the weight
+[APEX](https://github.com/NVIDIA/apex) but has now been made available in PyTorch directly. Enabling the `fused` option results in fewer kernels to perform the weight
 update than the unfused Adam optimizer, reducing latency and making more efficient use of GPU bandwidth by increasing register
 reuse. We can enabled the use of the fused optimizer in our training script by adding the flag `--enable_fused`. 
 
