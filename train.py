@@ -7,8 +7,7 @@ import argparse
 import torch
 import torch.nn as nn
 import torch.optim as optim
-from torch.amp import autocast
-from torch.cuda.amp import GradScaler
+from torch.amp import autocast, GradScaler
 import torch.multiprocessing
 from torch.utils.tensorboard import SummaryWriter
 from torch.nn.parallel import DistributedDataParallel
@@ -42,7 +41,7 @@ def train(params, args, local_rank, world_rank, world_size):
         model = torch.compile(model)
     
     if params.amp_dtype == torch.float16: 
-        scaler = GradScaler()
+        scaler = GradScaler('cuda')
     if params.distributed and not args.noddp:
         if args.disable_broadcast_buffers: 
             model = DistributedDataParallel(model, device_ids=[local_rank],
