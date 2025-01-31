@@ -181,7 +181,7 @@ def train(params, args, local_rank, world_rank, world_size):
                 all_mem_gb = pynvml.nvmlDeviceGetMemoryInfo(nvml_handle).used / (
                     1024.0 * 1024.0 * 1024.0
                 )
-                logging.info(f" Memory usage after forward pass: {all_mem_gb} GB.")
+                logging.info(f" Memory usage after forward pass: {all_mem_gb} GiB.")
 
             if params.amp_dtype == torch.float16:
                 scaler.scale(loss).backward()
