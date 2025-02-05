@@ -6,9 +6,8 @@
 #SBATCH --gpus-per-task 1
 #SBATCH --gpu-bind none
 #SBATCH --time=01:00:00
-#SBATCH --image=nersc/pytorch:24.06.02
+#SBATCH --image=nersc/pytorch:24.08.01
 #SBATCH --module=gpu,nccl-plugin
-#SBATCH --reservation=sc24_dl_tutorial_1
 #SBATCH -J vit-era5
 #SBATCH -o %x-%j.out
 

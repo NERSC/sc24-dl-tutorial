@@ -8,7 +8,7 @@ import pynvml
 import torch
 import torch.nn as nn
 import torch.optim as optim
-from torch.cuda.amp import autocast, GradScaler
+from torch.amp import autocast, GradScaler
 import torch.multiprocessing
 from torch.utils.tensorboard import SummaryWriter
 from torch.nn.parallel import DistributedDataParallel
@@ -58,7 +58,7 @@ def train(params, args, local_rank, world_rank, world_size):
         model = torch.compile(model)
 
     if params.amp_dtype == torch.float16:
-        scaler = GradScaler()
+        scaler = GradScaler('cuda')
 
     # weight initialization needs to be synced across shared weights
     if comm.get_size("tp-cp") > 1:
@@ -172,7 +172,7 @@ def train(params, args, local_rank, world_rank, world_size):
             optimizer.zero_grad()
 
             torch.cuda.nvtx.range_push(f"forward")
-            with autocast(enabled=params.amp_enabled, dtype=params.amp_dtype):
+            with autocast('cuda', enabled=params.amp_enabled, dtype=params.amp_dtype):
                 gen = model(inp)
                 loss = loss_func(gen, tar)
             torch.cuda.nvtx.range_pop()  # forward
@@ -243,7 +243,7 @@ def train(params, args, local_rank, world_rank, world_size):
         with torch.inference_mode():
             with torch.no_grad():
                 for i, data in enumerate(val_data_loader, 0):
-                    with autocast(enabled=params.amp_enabled, dtype=params.amp_dtype):
+                    with autocast('cuda', enabled=params.amp_enabled, dtype=params.amp_dtype):
                         inp, tar = map(lambda x: x.to(device), data)
                         gen = model(inp)
                         val_loss += loss_func(gen, tar)
