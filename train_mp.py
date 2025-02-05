@@ -351,7 +351,7 @@ if __name__ == "__main__":
         "--context_parallel",
         default=1,
         type=int,
-        help="Number of GPUs for tensor parallelism",
+        help="Number of GPUs for context parallelism",
     )
     parser.add_argument(
         "--parallel_order",
